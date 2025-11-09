@@ -22,11 +22,12 @@ pipeline {
     }
 }
         stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('MySonarQubeServer') {
-                    sh 'sonar-scanner'
-                }
-            }
+    steps {
+        withSonarQubeEnv('SonarQube') {
+            tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+            sh "${tool 'SonarScanner'}/bin/sonar-scanner"
         }
+    }
+}
     }
 }
