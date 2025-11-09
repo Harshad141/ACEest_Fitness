@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh 'PYTHONPATH=. pytest --cov=app --cov-report=xml'
+                sh 'docker run --rm aceest-flask-app pytest --cov=app --cov-report=xml'
             }
         }
         stage('SonarQube Analysis') {
