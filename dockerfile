@@ -1,6 +1,6 @@
 # Use official Python image
 FROM python:3.9-slim
-
+ENV PYTHONPATH=/app
 # Set working directory
 WORKDIR /app
 
