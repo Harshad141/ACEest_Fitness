@@ -1,6 +1,0 @@
-/app
-  ├── __init__.py
-  ├── routes.py
-  ├── models.py
-  └── config.py
-run.py

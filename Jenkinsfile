@@ -2,56 +2,26 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "aceest-flask-app"
+        PATH = "/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                sh 'docker build -t aceest-flask-app .'
             }
         }
-
         stage('Run Tests') {
             steps {
-                sh 'docker run --rm $IMAGE_NAME venv/bin/pytest'
+                sh 'PYTHONPATH=. pytest --cov=app --cov-report=xml'
             }
         }
-
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('MySonarQubeServer') {
                     sh 'sonar-scanner'
                 }
             }
-        }
-
-        stage('Deploy (Optional)') {
-            when {
-                branch 'main'
-            }
-            steps {
-                echo 'Deploying container...'
-                // Add deployment logic here (e.g., docker push, kubectl apply)
-            }
-        }
-    }
-
-    post {
-        always {
-            echo 'Pipeline finished.'
-        }
-        success {
-            echo 'Build and tests passed!'
-        }
-        failure {
-            echo 'Something went wrong.'
         }
     }
 }

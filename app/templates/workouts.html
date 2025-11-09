@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Workouts</title></head>
+<body>
+  <h1>Logged Workouts</h1>
+  {% if workouts %}
+    <ul>
+      {% for w in workouts %}
+        <li>{{ w.workout }} - {{ w.duration }} minutes</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No workouts logged yet.</p>
+  {% endif %}
+  <a href="/">Back</a>
+</body>
+</html>
